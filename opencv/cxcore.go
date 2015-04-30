@@ -562,7 +562,6 @@ func Intersections(lines []Vector, width int, height int) []Point {
 				inter := Point{X: int32(x), Y: int32(y)}
 				if inter.X > 0 && inter.Y > 0 && inter.X < int32(width) && inter.Y < int32(height) {
 					intersections = append(intersections, inter)
-					//fmt.Printf("comparing lines %+v with %+v = %+v (Intersection at %+v)\n", p0, p1, d, inter)
 				}
 			}
 
@@ -595,9 +594,7 @@ func Intersections(lines []Vector, width int, height int) []Point {
 			if point.Y < minY.Y {
 				minY = point
 			}
-		} else {
-			fmt.Printf("point filtered out by %d pixels = %+v\n", 50, point)
-		}
+		} 
 
 	}
 
@@ -674,7 +671,6 @@ func (c *Contours) Points(index int) [4]Point {
 	c2 := (*C.struct_CvPoint2D32f)(ptr)
 	C.cvBoxPoints(box, c2)
 
-	fmt.Printf("points = %+v\n", points)
 	var thePoints [4]Point
 	thePoints[0] = Point{X: int32(points[0].x), Y: int32(points[0].y)}
 	thePoints[1] = Point{X: int32(points[1].x), Y: int32(points[1].y)}
@@ -788,7 +784,6 @@ func ApproxPoly(con Contours) {
 	seq := (*C.CvSeq)(C.cvApproxPoly(unsafe.Pointer(src), C.int(unsafe.Sizeof(C.struct_CvContour{})), (*C.struct_CvMemStorage)(mem), C.CV_POLY_APPROX_DP, 1, 1))
 
 	tmp := (*C.struct_CvSeq)(unsafe.Pointer(seq))
-	fmt.Printf("tmp = %+v\n", tmp)
 
 	C.cvClearMemStorage(mem)
 	C.cvReleaseMemStorage(&mem)
